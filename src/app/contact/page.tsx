@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -105,9 +106,11 @@ export default function Contact() {
       <nav className="fixed top-0 w-full bg-black/90 backdrop-blur-sm z-50 border-b border-green-500/30">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <a href="/" className="flex items-center space-x-4">
-            <img 
+            <Image 
               src="/legendary-hustlers-logo.png" 
               alt="Legendary Hustlers Crew" 
+              width={150}
+              height={48}
               className="h-12 w-auto spinning-logo"
             />
             <div className="orbitron text-xl font-bold neon-text hidden lg:block">

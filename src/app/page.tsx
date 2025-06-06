@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function Home() {
   const [currentService, setCurrentService] = useState(0);
@@ -156,10 +157,12 @@ export default function Home() {
       <nav className="fixed top-0 w-full bg-black/90 backdrop-blur-sm z-50 border-b border-green-500/30">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <img 
+            <Image 
               src="/legendary-hustlers-logo.png" 
               alt="Legendary Hustlers Crew" 
-              className="h-12 w-auto spinning-logo"
+              width={150}
+              height={48}
+              className="h-12 w-auto"
             />
             <div className="orbitron text-xl font-bold neon-text hidden lg:block">
               LEGENDARY HUSTLERS CREW
@@ -207,47 +210,61 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center relative pt-20 pb-32">
-        <div className="text-center space-y-8 max-w-6xl mx-auto px-4">
-          {/* Logo and Main Title */}
+              {/* Hero Section */}
+        <section className="min-h-screen flex items-center justify-center relative pt-32 pb-16">
+          <div className="text-center space-y-8 max-w-6xl mx-auto px-4">
+          {/* Logo and Company Name */}
           <div className="space-y-6">
             <div className="flex justify-center">
-              <img 
+              <Image 
                 src="/legendary-hustlers-logo.png" 
                 alt="Legendary Hustlers Crew" 
-                className="h-24 md:h-32 w-auto spinning-logo"
+                width={400}
+                height={200}
+                className="h-40 md:h-48 lg:h-56 w-auto spinning-logo"
+                priority
               />
             </div>
-            <h1 className="orbitron text-4xl md:text-6xl lg:text-7xl font-black text-gradient">
+            <div className="orbitron text-2xl md:text-4xl lg:text-5xl font-black neon-text">
+              LEGENDARY HUSTLERS CREW
+            </div>
+          </div>
+
+          {/* Homescreen GIF */}
+          <div className="flex justify-center mt-8">
+            <div className="relative">
+              <Image 
+                src="/homescreen.gif" 
+                alt="Legendary Hustlers in Action" 
+                width={400}
+                height={280}
+                className="rounded-lg border-2 border-green-500 shadow-2xl"
+                unoptimized
+              />
+              <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-pink-500 to-cyan-500 rounded-lg blur opacity-20"></div>
+            </div>
+          </div>
+          
+          {/* Main Title */}
+          <div className="space-y-4 mt-12">
+            <h1 className="orbitron text-3xl md:text-5xl lg:text-6xl font-black text-gradient">
               CYBERPUNK SERVICES
             </h1>
-            <h2 className="orbitron text-2xl md:text-4xl font-bold neon-cyan">
+            <h2 className="orbitron text-xl md:text-3xl font-bold neon-cyan">
               FOR THE DIGITAL AGE
             </h2>
           </div>
           
-          {/* Homescreen GIF and Text */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-12">
-            <div className="space-y-6">
-              <p className="text-lg md:text-xl neon-yellow">
-                From ancient crafts to quantum-age solutions. We bridge traditional expertise with futuristic innovation.
-              </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="/contact" className="cyber-button text-lg px-8 py-4">GET QUOTE</a>
-                <a href="#services" className="cyber-button border-pink-500 text-pink-500 hover:bg-pink-500 text-lg px-8 py-4">
-                  VIEW SERVICES
-                </a>
-              </div>
-            </div>
-            
-            <div className="flex justify-center">
-              <img 
-                src="/homescreen.gif" 
-                alt="Legendary Hustlers in Action" 
-                className="max-w-full h-auto rounded-lg border-2 border-green-500 floating-gif shadow-2xl"
-                style={{ maxHeight: '300px' }}
-              />
+          {/* Description and Actions */}
+          <div className="space-y-8 mt-8">
+            <p className="text-lg md:text-xl neon-yellow max-w-4xl mx-auto">
+              From ancient crafts to quantum-age solutions. We bridge traditional expertise with futuristic innovation.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <a href="/contact" className="cyber-button text-lg px-8 py-4">GET QUOTE</a>
+              <a href="#services" className="cyber-button border-pink-500 text-pink-500 hover:bg-pink-500 text-lg px-8 py-4">
+                VIEW SERVICES
+              </a>
             </div>
           </div>
         </div>
