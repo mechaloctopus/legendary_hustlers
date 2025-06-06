@@ -211,7 +211,7 @@ export default function Home() {
       </nav>
 
               {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center relative pt-32 pb-16">
+        <section className="min-h-screen flex items-center justify-center relative pt-64 pb-16">
           <div className="text-center space-y-8 max-w-6xl mx-auto px-4">
           {/* Logo and Company Name */}
           <div className="space-y-6">
@@ -221,7 +221,7 @@ export default function Home() {
                 alt="Legendary Hustlers Crew" 
                 width={400}
                 height={200}
-                className="h-40 md:h-48 lg:h-56 w-auto spinning-logo"
+                className="h-40 md:h-48 lg:h-56 w-auto"
                 priority
               />
             </div>
