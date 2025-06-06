@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function About() {
   const [activeTab, setActiveTab] = useState('mission');
 
   const teamMembers = [
     {
-      name: "JACK 'CHAINSAW' REYNOLDS",
+      name: "JACK &rsquo;CHAINSAW&rsquo; REYNOLDS",
       role: "FOUNDER & CEO",
       bio: "Former wildland firefighter turned digital entrepreneur. Expert in tree services, fire mitigation, and cutting-edge technology integration.",
       image: "👨‍💼",
@@ -16,7 +17,7 @@ export default function About() {
       color: "neon-green"
     },
     {
-      name: "SARAH 'CODE' CHEN",
+      name: "SARAH &rsquo;CODE&rsquo; CHEN",
       role: "TECH DIRECTOR",
       bio: "Full-stack developer and 3D modeling specialist. Bridges the gap between traditional services and digital innovation.",
       image: "👩‍💻",
@@ -24,7 +25,7 @@ export default function About() {
       color: "neon-cyan"
     },
     {
-      name: "MIKE 'STONE' RODRIGUEZ",
+      name: "MIKE &rsquo;STONE&rsquo; RODRIGUEZ",
       role: "CONSTRUCTION LEAD",
       bio: "Master craftsman with 20 years experience in construction, stonework, and artistic installations.",
       image: "👷‍♂️",
@@ -32,7 +33,7 @@ export default function About() {
       color: "neon-yellow"
     },
     {
-      name: "LUNA 'ZEN' BLACKWOOD",
+      name: "LUNA &rsquo;ZEN&rsquo; BLACKWOOD",
       role: "LANDSCAPE DESIGNER",
       bio: "Permaculture expert and zen garden specialist. Creates harmonious spaces that blend technology with nature.",
       image: "🧘‍♀️",
@@ -48,7 +49,7 @@ export default function About() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-black/90 backdrop-blur-sm z-50 border-b border-green-500/30">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <a href="/" className="flex items-center space-x-4">
+          <Link href="/" className="flex items-center space-x-4">
             <Image 
               src="/legendary-hustlers-logo.png" 
               alt="Legendary Hustlers Crew" 
@@ -59,9 +60,9 @@ export default function About() {
             <div className="orbitron text-xl font-bold neon-text hidden lg:block">
               LEGENDARY HUSTLERS CREW
             </div>
-          </a>
+          </Link>
           <div className="flex space-x-6">
-            <a href="/" className="cyber-button text-sm">HOME</a>
+            <Link href="/" className="cyber-button text-sm">HOME</Link>
             <button className="cyber-button text-sm">SERVICES</button>
             <button className="cyber-button text-sm border-pink-500 text-pink-500">ABOUT</button>
             <button className="cyber-button text-sm">CONTACT</button>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -105,7 +106,7 @@ export default function Contact() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-black/90 backdrop-blur-sm z-50 border-b border-green-500/30">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <a href="/" className="flex items-center space-x-4">
+          <Link href="/" className="flex items-center space-x-4">
             <Image 
               src="/legendary-hustlers-logo.png" 
               alt="Legendary Hustlers Crew" 
@@ -116,9 +117,9 @@ export default function Contact() {
             <div className="orbitron text-xl font-bold neon-text hidden lg:block">
               LEGENDARY HUSTLERS CREW
             </div>
-          </a>
+          </Link>
           <div className="flex space-x-6">
-            <a href="/" className="cyber-button text-sm">HOME</a>
+            <Link href="/" className="cyber-button text-sm">HOME</Link>
             <button className="cyber-button text-sm">SERVICES</button>
             <a href="/about" className="cyber-button text-sm">ABOUT</a>
             <button className="cyber-button text-sm border-pink-500 text-pink-500">CONTACT</button>
