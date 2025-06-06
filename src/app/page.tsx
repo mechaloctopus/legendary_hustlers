@@ -156,19 +156,21 @@ export default function Home() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-black/90 backdrop-blur-sm z-50 border-b border-green-500/30">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 md:space-x-4">
             <Image 
               src="/legendary-hustlers-logo.png" 
               alt="Legendary Hustlers Crew" 
               width={150}
               height={48}
-              className="h-12 w-auto"
+              className="h-8 md:h-12 w-auto"
             />
-            <div className="orbitron text-xl font-bold neon-text hidden lg:block">
+            <div className="orbitron text-sm md:text-xl font-bold neon-text hidden sm:block">
               LEGENDARY HUSTLERS CREW
             </div>
           </div>
-          <div className="flex space-x-6">
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex space-x-6">
             <button className="cyber-button text-sm border-pink-500 text-pink-500">HOME</button>
             <div className="relative" id="services-dropdown">
               <button 
@@ -178,7 +180,7 @@ export default function Home() {
                 SERVICES ▼
               </button>
               {showDropdown && (
-                <div className="absolute top-full left-0 mt-2 w-64 terminal-style p-4 z-50">
+                <div className="absolute top-full right-0 mt-2 w-80 terminal-style p-4 z-50">
                   <div className="space-y-2">
                     {services.slice(0, 8).map((service, index) => (
                       <div 
@@ -207,38 +209,76 @@ export default function Home() {
             <a href="/about" className="cyber-button text-sm">ABOUT</a>
             <a href="/contact" className="cyber-button text-sm">CONTACT</a>
           </div>
+
+          {/* Mobile Navigation */}
+          <div className="md:hidden">
+            <button 
+              className="cyber-button text-sm px-3 py-2"
+              onClick={() => setShowDropdown(!showDropdown)}
+            >
+              ☰ MENU
+            </button>
+            {showDropdown && (
+              <div className="absolute top-full right-4 left-4 mt-2 terminal-style p-4 z-50">
+                <div className="space-y-3">
+                  <button className="block w-full text-left cyber-button text-sm border-pink-500 text-pink-500">HOME</button>
+                  <a 
+                    href="#services" 
+                    className="block w-full text-left cyber-button text-sm"
+                    onClick={() => setShowDropdown(false)}
+                  >
+                    SERVICES
+                  </a>
+                  <a 
+                    href="/about" 
+                    className="block w-full text-left cyber-button text-sm"
+                    onClick={() => setShowDropdown(false)}
+                  >
+                    ABOUT
+                  </a>
+                  <a 
+                    href="/contact" 
+                    className="block w-full text-left cyber-button text-sm"
+                    onClick={() => setShowDropdown(false)}
+                  >
+                    CONTACT
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
 
               {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center relative pt-64 pb-16">
-          <div className="text-center space-y-8 max-w-6xl mx-auto px-4">
+        <section className="min-h-screen flex items-center justify-center relative pt-24 md:pt-32 lg:pt-40 pb-16">
+          <div className="text-center space-y-6 md:space-y-8 max-w-6xl mx-auto px-4">
           {/* Logo and Company Name */}
-          <div className="space-y-6">
+          <div className="space-y-4 md:space-y-6">
             <div className="flex justify-center">
               <Image 
                 src="/legendary-hustlers-logo.png" 
                 alt="Legendary Hustlers Crew" 
                 width={400}
                 height={200}
-                className="h-40 md:h-48 lg:h-56 w-auto"
+                className="h-32 md:h-40 lg:h-48 xl:h-56 w-auto"
                 priority
               />
             </div>
-            <div className="orbitron text-2xl md:text-4xl lg:text-5xl font-black neon-text">
+            <div className="orbitron text-xl md:text-2xl lg:text-4xl xl:text-5xl font-black neon-text">
               LEGENDARY HUSTLERS CREW
             </div>
           </div>
 
           {/* Homescreen GIF */}
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center mt-6 md:mt-8">
             <div className="relative">
               <Image 
                 src="/homescreen.gif" 
                 alt="Legendary Hustlers in Action" 
                 width={400}
                 height={280}
-                className="rounded-lg border-2 border-green-500 shadow-2xl"
+                className="w-80 md:w-96 lg:w-full max-w-md rounded-lg border-2 border-green-500 shadow-2xl"
                 unoptimized
               />
               <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-pink-500 to-cyan-500 rounded-lg blur opacity-20"></div>
@@ -246,31 +286,31 @@ export default function Home() {
           </div>
           
           {/* Main Title */}
-          <div className="space-y-4 mt-12">
-            <h1 className="orbitron text-3xl md:text-5xl lg:text-6xl font-black text-gradient">
+          <div className="space-y-3 md:space-y-4 mt-8 md:mt-12">
+            <h1 className="orbitron text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-gradient">
               CYBERPUNK SERVICES
             </h1>
-            <h2 className="orbitron text-xl md:text-3xl font-bold neon-cyan">
+            <h2 className="orbitron text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold neon-cyan">
               FOR THE DIGITAL AGE
             </h2>
           </div>
           
           {/* Description and Actions */}
-          <div className="space-y-8 mt-8">
-            <p className="text-lg md:text-xl neon-yellow max-w-4xl mx-auto">
+          <div className="space-y-6 md:space-y-8 mt-6 md:mt-8">
+            <p className="text-base md:text-lg lg:text-xl neon-yellow max-w-4xl mx-auto px-4">
               From ancient crafts to quantum-age solutions. We bridge traditional expertise with futuristic innovation.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a href="/contact" className="cyber-button text-lg px-8 py-4">GET QUOTE</a>
-              <a href="#services" className="cyber-button border-pink-500 text-pink-500 hover:bg-pink-500 text-lg px-8 py-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-3 md:gap-4 px-4">
+              <a href="/contact" className="cyber-button text-base md:text-lg px-6 md:px-8 py-3 md:py-4 w-full sm:w-auto text-center">GET QUOTE</a>
+              <a href="#services" className="cyber-button border-pink-500 text-pink-500 hover:bg-pink-500 text-base md:text-lg px-6 md:px-8 py-3 md:py-4 w-full sm:w-auto text-center">
                 VIEW SERVICES
               </a>
             </div>
           </div>
         </div>
         
-        {/* Floating Service Preview */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden lg:block">
+        {/* Floating Service Preview - Hidden on mobile for better UX */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden xl:block">
           <div className="service-card w-96 text-center fade-in">
             <div className={`text-4xl mb-4 ${services[currentService].color}`}>
               {services[currentService].icon}
@@ -286,24 +326,24 @@ export default function Home() {
       </section>
 
       {/* Services Grid */}
-      <section id="services" className="py-20 px-4">
+      <section id="services" className="py-12 md:py-20 px-4">
         <div className="container mx-auto">
-          <h2 className="orbitron text-4xl font-bold text-center mb-16 neon-cyan">
+          <h2 className="orbitron text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16 neon-cyan">
             OUR SERVICES
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {services.map((service, index) => (
               <div key={index} className="service-card fade-in">
-                <div className={`text-3xl mb-4 ${service.color}`}>
+                <div className={`text-2xl md:text-3xl mb-4 ${service.color}`}>
                   {service.icon}
                 </div>
-                <h3 className={`orbitron text-lg font-bold mb-4 ${service.color}`}>
+                <h3 className={`orbitron text-base md:text-lg font-bold mb-3 md:mb-4 ${service.color}`}>
                   {service.title}
                 </h3>
-                <p className="text-sm text-gray-300 mb-4">
+                <p className="text-sm text-gray-300 mb-4 leading-relaxed">
                   {service.description}
                 </p>
-                <a href="/contact" className="cyber-button text-xs">GET QUOTE</a>
+                <a href="/contact" className="cyber-button text-xs w-full text-center block">GET QUOTE</a>
               </div>
             ))}
           </div>
@@ -311,12 +351,12 @@ export default function Home() {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-20 px-4 bg-black/50">
+      <section className="py-12 md:py-20 px-4 bg-black/50">
         <div className="container mx-auto max-w-4xl">
-          <h2 className="orbitron text-4xl font-bold text-center mb-16 neon-yellow">
+          <h2 className="orbitron text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16 neon-yellow">
             GET YOUR QUOTE
           </h2>
-          <div className="terminal-style p-8">
+          <div className="terminal-style p-6 md:p-8">
             <form className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>

@@ -360,12 +360,12 @@ READY TO INITIATE PROJECT? Use: CONTACT | SERVICES | QUOTE`
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-[9999] bg-black border-2 border-green-500 p-4 hover:bg-green-500 hover:text-black transition-all shadow-2xl"
-        style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 9999 }}
+        className="fixed bottom-4 right-4 z-[9999] bg-black border-2 border-green-500 p-3 md:p-4 hover:bg-green-500 hover:text-black transition-all shadow-2xl"
+        style={{ position: 'fixed', bottom: '16px', right: '16px', zIndex: 9999 }}
       >
-        <div className="flex items-center space-x-2">
-          <span className="text-lg">🤖</span>
-          <span className="font-bold text-green-500 hover:text-black font-mono">LEGENDARY BOT</span>
+        <div className="flex items-center space-x-1 md:space-x-2">
+          <span className="text-base md:text-lg">🤖</span>
+          <span className="font-bold text-green-500 hover:text-black font-mono text-xs md:text-sm hidden sm:block">LEGENDARY BOT</span>
         </div>
       </button>
     );
@@ -373,25 +373,25 @@ READY TO INITIATE PROJECT? Use: CONTACT | SERVICES | QUOTE`
 
   return (
     <div 
-      className="fixed bottom-6 right-6 z-[9999] w-96 h-[500px] bg-black border-2 border-green-500 shadow-2xl"
-      style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 9999 }}
+      className="fixed bottom-4 right-4 z-[9999] w-80 sm:w-96 h-[400px] sm:h-[500px] bg-black border-2 border-green-500 shadow-2xl"
+      style={{ position: 'fixed', bottom: '16px', right: '16px', zIndex: 9999 }}
     >
       {/* Header */}
-      <div className="bg-green-500 text-black p-3 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <span>🤖</span>
-          <span className="font-bold">LEGENDARY HUSTLER BOT v2.77.4</span>
+      <div className="bg-green-500 text-black p-2 md:p-3 flex justify-between items-center">
+        <div className="flex items-center space-x-1 md:space-x-2">
+          <span className="text-sm md:text-base">🤖</span>
+          <span className="font-bold text-xs md:text-sm">LEGENDARY HUSTLER BOT v2.77.4</span>
         </div>
         <button
           onClick={() => setIsOpen(false)}
-          className="hover:bg-black hover:text-green-500 px-2 py-1 text-sm font-bold"
+          className="hover:bg-black hover:text-green-500 px-1 md:px-2 py-1 text-xs md:text-sm font-bold"
         >
           ×
         </button>
       </div>
 
       {/* Messages */}
-      <div className="h-[400px] overflow-y-auto p-4 bg-black text-green-500 font-mono text-sm">
+      <div className="h-[320px] sm:h-[400px] overflow-y-auto p-2 md:p-4 bg-black text-green-500 font-mono text-xs md:text-sm">
         {messages.map((message, index) => (
           <div key={index} className="mb-4">
             {message.role === 'user' ? (

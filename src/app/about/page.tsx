@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 export default function About() {
   const [activeTab, setActiveTab] = useState('mission');
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const teamMembers = [
     {
@@ -49,48 +50,70 @@ export default function About() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-black/90 backdrop-blur-sm z-50 border-b border-green-500/30">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-4">
+          <Link href="/" className="flex items-center space-x-2 md:space-x-4">
             <Image 
               src="/legendary-hustlers-logo.png" 
               alt="Legendary Hustlers Crew" 
               width={150}
               height={48}
-              className="h-12 w-auto spinning-logo"
+              className="h-8 md:h-12 w-auto"
             />
-            <div className="orbitron text-xl font-bold neon-text hidden lg:block">
+            <div className="orbitron text-sm md:text-xl font-bold neon-text hidden sm:block">
               LEGENDARY HUSTLERS CREW
             </div>
           </Link>
-          <div className="flex space-x-6">
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex space-x-6">
             <Link href="/" className="cyber-button text-sm">HOME</Link>
-            <button className="cyber-button text-sm">SERVICES</button>
+            <Link href="/#services" className="cyber-button text-sm">SERVICES</Link>
             <button className="cyber-button text-sm border-pink-500 text-pink-500">ABOUT</button>
-            <button className="cyber-button text-sm">CONTACT</button>
+            <Link href="/contact" className="cyber-button text-sm">CONTACT</Link>
+          </div>
+
+          {/* Mobile Navigation */}
+          <div className="md:hidden">
+            <button 
+              className="cyber-button text-sm px-3 py-2"
+              onClick={() => setShowDropdown(!showDropdown)}
+            >
+              ☰ MENU
+            </button>
+            {showDropdown && (
+              <div className="absolute top-full right-4 left-4 mt-2 terminal-style p-4 z-50">
+                <div className="space-y-3">
+                  <Link href="/" className="block w-full text-left cyber-button text-sm" onClick={() => setShowDropdown(false)}>HOME</Link>
+                  <Link href="/#services" className="block w-full text-left cyber-button text-sm" onClick={() => setShowDropdown(false)}>SERVICES</Link>
+                  <button className="block w-full text-left cyber-button text-sm border-pink-500 text-pink-500">ABOUT</button>
+                  <Link href="/contact" className="block w-full text-left cyber-button text-sm" onClick={() => setShowDropdown(false)}>CONTACT</Link>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
+      <section className="pt-24 md:pt-32 pb-12 md:pb-20 px-4">
         <div className="container mx-auto text-center">
-          <h1 className="orbitron text-5xl md:text-7xl font-black neon-text glitch mb-8">
+          <h1 className="orbitron text-3xl md:text-5xl lg:text-7xl font-black neon-text glitch mb-6 md:mb-8">
             ABOUT THE CREW
           </h1>
-          <p className="text-xl md:text-2xl neon-yellow max-w-4xl mx-auto">
+          <p className="text-lg md:text-xl lg:text-2xl neon-yellow max-w-4xl mx-auto px-4">
             We&rsquo;re not just service providers - we&rsquo;re digital pioneers bridging the gap between traditional craftsmanship and futuristic innovation.
           </p>
         </div>
       </section>
 
       {/* Tab Navigation */}
-      <section className="px-4 mb-20">
+      <section className="px-4 mb-12 md:mb-20">
         <div className="container mx-auto max-w-6xl">
-          <div className="flex justify-center space-x-4 mb-12">
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-8 md:mb-12 px-4">
             {['mission', 'story', 'team'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`cyber-button ${activeTab === tab ? 'bg-green-500 text-black' : ''}`}
+                className={`cyber-button w-full sm:w-auto px-6 py-3 ${activeTab === tab ? 'bg-green-500 text-black' : ''}`}
               >
                 {tab.toUpperCase()}
               </button>
