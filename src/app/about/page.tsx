@@ -77,7 +77,7 @@ export default function About() {
             ABOUT THE CREW
           </h1>
           <p className="text-xl md:text-2xl neon-yellow max-w-4xl mx-auto">
-            We're not just service providers - we're digital pioneers bridging the gap between traditional craftsmanship and futuristic innovation.
+            We&rsquo;re not just service providers - we&rsquo;re digital pioneers bridging the gap between traditional craftsmanship and futuristic innovation.
           </p>
         </div>
       </section>
@@ -109,13 +109,13 @@ export default function About() {
                     <h3 className="orbitron text-xl font-bold neon-green mb-4">INNOVATION</h3>
                     <p className="text-gray-300">
                       We combine traditional skills with cutting-edge technology to deliver services that exceed expectations. 
-                      From VR property mapping to AI-assisted project planning, we're always pushing boundaries.
+                      From VR property mapping to AI-assisted project planning, we&rsquo;re always pushing boundaries.
                     </p>
                   </div>
                   <div className="service-card">
                     <h3 className="orbitron text-xl font-bold neon-pink mb-4">EXCELLENCE</h3>
                     <p className="text-gray-300">
-                      Every project is executed with precision and attention to detail. Whether it's a simple chainsaw sharpening 
+                      Every project is executed with precision and attention to detail. Whether it&rsquo;s a simple chainsaw sharpening 
                       or a complex permaculture installation, we deliver legendary results.
                     </p>
                   </div>
@@ -169,8 +169,8 @@ export default function About() {
                   <div className="text-6xl mb-4">🚀</div>
                   <h3 className="orbitron text-2xl font-bold neon-pink mb-4">LEGENDARY STATUS</h3>
                   <p className="text-gray-300 text-lg">
-                    Today, we're the go-to crew for projects that others won't touch. From emergency tree removal to cutting-edge 
-                    landscape mapping, we've built a reputation for delivering the impossible with style.
+                    Today, we&rsquo;re the go-to crew for projects that others won&rsquo;t touch. From emergency tree removal to cutting-edge 
+                                          landscape mapping, we&rsquo;ve built a reputation for delivering the impossible with style.
                   </p>
                 </div>
               </div>
