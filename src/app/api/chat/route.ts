@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCurrentConfig, companyKnowledge } from '../../config/chatbot-config';
+import { getCurrentConfig, companyKnowledge, ChatbotConfig } from '../../config/chatbot-config';
 
 // This will be expanded to support actual AI APIs
 interface ChatMessage {
@@ -14,7 +14,7 @@ interface ChatRequest {
 }
 
 // Mock AI Response Generator (replace with actual API calls)
-async function generateMockResponse(userMessage: string, systemPrompt: string): Promise<string> {
+async function generateMockResponse(userMessage: string): Promise<string> {
   const input = userMessage.toLowerCase();
   
   // Emergency detection
@@ -138,7 +138,8 @@ What specific tree service can I help you with today?`;
 }
 
 // Future: OpenAI API Integration
-async function callOpenAI(messages: ChatMessage[], config: any): Promise<string> {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function callOpenAI(_messages: ChatMessage[], _config: ChatbotConfig): Promise<string> {
   // This will be implemented when API key is configured
   // const response = await fetch('https://api.openai.com/v1/chat/completions', {
   //   method: 'POST',
@@ -158,13 +159,15 @@ async function callOpenAI(messages: ChatMessage[], config: any): Promise<string>
 }
 
 // Future: Claude API Integration  
-async function callClaude(messages: ChatMessage[], config: any): Promise<string> {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function callClaude(_messages: ChatMessage[], _config: ChatbotConfig): Promise<string> {
   // Implementation for Claude API
   throw new Error('Claude API not yet configured. Please add API key to enable.');
 }
 
 // Future: DeepSeek API Integration
-async function callDeepSeek(messages: ChatMessage[], config: any): Promise<string> {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function callDeepSeek(_messages: ChatMessage[], _config: ChatbotConfig): Promise<string> {
   // Implementation for DeepSeek API
   throw new Error('DeepSeek API not yet configured. Please add API key to enable.');
 }
@@ -172,7 +175,7 @@ async function callDeepSeek(messages: ChatMessage[], config: any): Promise<strin
 export async function POST(request: NextRequest) {
   try {
     const body: ChatRequest = await request.json();
-    const { messages, apiProvider, customSystemPrompt } = body;
+    const { messages, apiProvider } = body;
     
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
@@ -182,7 +185,6 @@ export async function POST(request: NextRequest) {
     }
 
     const config = getCurrentConfig();
-    const systemPrompt = customSystemPrompt || config.systemPrompt;
     
     // Get the latest user message
     const userMessage = messages[messages.length - 1]?.content || '';
@@ -218,12 +220,12 @@ export async function POST(request: NextRequest) {
         case 'local':
         default:
           // Use mock responses until API is configured
-          response = await generateMockResponse(userMessage, systemPrompt);
+          response = await generateMockResponse(userMessage);
           break;
       }
     } catch (apiError) {
       console.warn(`API Error: ${apiError}. Falling back to mock responses.`);
-      response = await generateMockResponse(userMessage, systemPrompt);
+      response = await generateMockResponse(userMessage);
     }
 
     return NextResponse.json({

@@ -58,7 +58,7 @@ export default function Home() {
       <div className="cyberpunk-grid"></div>
 
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-black/90 backdrop-blur-sm cyber-border">
+      <nav className="fixed top-0 w-full z-40 bg-black/90 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
@@ -104,7 +104,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-24 md:pt-32 lg:pt-40 pb-16 px-4 sm:px-6 lg:px-8">
+      <section className="pt-32 md:pt-40 lg:pt-48 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <div className="space-y-6 md:space-y-8">
             <Image 

@@ -35,7 +35,7 @@ export default function AdminPanel() {
       updateConfig(updates);
       setSaveStatus('saved');
       setTimeout(() => setSaveStatus('idle'), 2000);
-    } catch (error) {
+    } catch {
       setSaveStatus('error');
       setTimeout(() => setSaveStatus('idle'), 3000);
     }
@@ -112,7 +112,7 @@ export default function AdminPanel() {
             {['general', 'api', 'prompts', 'appearance', 'test'].map((tab) => (
               <button
                 key={tab}
-                onClick={() => setActiveTab(tab as any)}
+                onClick={() => setActiveTab(tab as typeof activeTab)}
                 className={`cyber-button px-4 py-2 text-sm ${
                   activeTab === tab ? 'bg-terminal-green text-black' : ''
                 }`}
@@ -161,7 +161,7 @@ export default function AdminPanel() {
                     </label>
                     <select
                       value={config.responseStyle}
-                      onChange={(e) => handleConfigUpdate({ responseStyle: e.target.value as any })}
+                      onChange={(e) => handleConfigUpdate({ responseStyle: e.target.value as ChatbotConfig['responseStyle'] })}
                       className="w-full bg-black border border-terminal-green p-3 terminal-text focus:border-terminal-orange focus:outline-none"
                     >
                       <option value="professional">Professional</option>
@@ -222,7 +222,7 @@ export default function AdminPanel() {
                     </label>
                     <select
                       value={config.apiProvider}
-                      onChange={(e) => handleConfigUpdate({ apiProvider: e.target.value as any })}
+                      onChange={(e) => handleConfigUpdate({ apiProvider: e.target.value as ChatbotConfig['apiProvider'] })}
                       className="w-full bg-black border border-terminal-green p-3 terminal-text focus:border-terminal-orange focus:outline-none"
                     >
                       {Object.entries(apiProviders).map(([key, provider]) => (
@@ -335,7 +335,7 @@ export default function AdminPanel() {
                       placeholder="Enter your custom system prompt..."
                     />
                     <p className="text-xs terminal-text mt-2">
-                      This prompt defines the bot's personality, knowledge, and behavior.
+                      This prompt defines the bot&apos;s personality, knowledge, and behavior.
                     </p>
                   </div>
                 </div>
@@ -354,7 +354,7 @@ export default function AdminPanel() {
                     </label>
                     <select
                       value={config.terminalTheme}
-                      onChange={(e) => handleConfigUpdate({ terminalTheme: e.target.value as any })}
+                      onChange={(e) => handleConfigUpdate({ terminalTheme: e.target.value as ChatbotConfig['terminalTheme'] })}
                       className="w-full bg-black border border-terminal-green p-3 terminal-text focus:border-terminal-orange focus:outline-none"
                     >
                       <option value="green">Green (Classic)</option>
@@ -370,7 +370,7 @@ export default function AdminPanel() {
                     </label>
                     <select
                       value={config.cursorStyle}
-                      onChange={(e) => handleConfigUpdate({ cursorStyle: e.target.value as any })}
+                      onChange={(e) => handleConfigUpdate({ cursorStyle: e.target.value as ChatbotConfig['cursorStyle'] })}
                       className="w-full bg-black border border-terminal-green p-3 terminal-text focus:border-terminal-orange focus:outline-none"
                     >
                       <option value="block">Block</option>

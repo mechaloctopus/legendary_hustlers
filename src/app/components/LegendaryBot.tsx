@@ -298,7 +298,8 @@ Email: ${companyKnowledge.contact.email}`,
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSubmit(e as any);
+      const formEvent = new Event('submit', { bubbles: true, cancelable: true }) as unknown as React.FormEvent;
+      handleSubmit(formEvent);
     }
   };
 
