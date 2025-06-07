@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { getCurrentConfig, companyKnowledge, responseTemplates, terminalCommands } from '../config/chatbot-config';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -15,41 +16,7 @@ export default function LegendaryBot() {
   const [isTyping, setIsTyping] = useState(false);
   const [showCursor, setShowCursor] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const companyKnowledge = {
-    services: [
-      "Tree Service & Stump Grinding - Professional tree removal with video quote system",
-      "Web & App Development - Custom digital solutions and 3D printing",
-      "Chainsaw Chain Sharpening - Equipment maintenance services",
-      "Bathroom & Kitchen Tile Work - Home improvement services",
-      "Gnome Style Rockwalls - Artistic stonework",
-      "Chainsaw Carving - Custom wood sculptures",
-      "Wood Burning & Custom Signs - Pyrography and signage",
-      "Basic Mechanicking - Tractor and equipment repair",
-      "Cattle Branding & Roundup - Livestock services",
-      "Fencing - Property boundary solutions",
-      "Fire Hazard Mitigation - Wildland firefighter expertise",
-      "Zen Landscaping - Peaceful garden design",
-      "Landscape NerfScans - 3D property mapping and VR visualization",
-      "Permaculture Services - Sustainable land management",
-      "Land Clearing - Site preparation",
-      "Custom Art & Construction - Bespoke installations",
-      "Yakisugi Wood Preparation - Japanese charred wood technique",
-      "Drywall Repair - Interior finishing",
-      "Emergency Services - 24/7 urgent assistance"
-    ],
-    team: [
-      "Jack 'Chainsaw' Reynolds - Founder & CEO, Former wildland firefighter",
-      "Sarah 'Code' Chen - Tech Director, Full-stack developer and 3D modeling specialist",
-      "Mike 'Stone' Rodriguez - Construction Lead, Master craftsman with 20 years experience",
-      "Luna 'Zen' Blackwood - Landscape Designer, Permaculture expert and zen garden specialist"
-    ],
-    contact: {
-      phone: "(555) HUSTLE-NOW",
-      email: "hustlers@legendary.crew",
-      emergency: "(555) EMERGENCY"
-    }
-  };
+  const [config] = useState(getCurrentConfig());
 
   // Cursor blinking effect
   useEffect(() => {
@@ -64,23 +31,13 @@ export default function LegendaryBot() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Initial greeting
+  // Initial greeting when opened
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       setTimeout(() => {
         const greeting = {
           role: 'assistant' as const,
-          content: `LEGENDARY HUSTLERS CREW - TERMINAL v2.77.4
-SYSTEM INITIALIZED...
-NEURAL NETWORK ONLINE...
-CYBERNETIC INTERFACE ACTIVATED...
-
-> GREETINGS, OPERATIVE. I AM THE LEGENDARY HUSTLER BOT.
-> I'VE BEEN PROGRAMMED WITH EXTENSIVE KNOWLEDGE OF OUR OPERATIONS.
-> ASK ME ABOUT OUR SERVICES, TEAM, OR HOW TO NAVIGATE THIS SYSTEM.
-> TYPE 'HELP' FOR AVAILABLE COMMANDS.
-
-AWAITING INPUT...`,
+          content: responseTemplates.greeting,
           timestamp: new Date()
         };
         setMessages([greeting]);
@@ -88,55 +45,58 @@ AWAITING INPUT...`,
     }
   }, [isOpen, messages.length]);
 
+  // Generate response using API or local commands
   const generateResponse = async (userInput: string): Promise<string> => {
-    const input = userInput.toLowerCase();
+    const input = userInput.toLowerCase().trim();
     
-    // Command responses
-    if (input === 'help') {
-      return `AVAILABLE COMMANDS:
-> SERVICES - List all available services
-> TEAM - Meet our crew members
-> CONTACT - Get contact information
-> QUOTE - How to get a project quote
-> EMERGENCY - Emergency contact protocols
-> NAVIGATE - Site navigation help
-> CLEAR - Clear terminal history
+    // Handle local commands if enabled
+    if (config.enableCommands) {
+      // Command responses that don't need API
+      if (input === 'help') {
+        return `AVAILABLE COMMANDS:
 
-Or just ask me anything about Legendary Hustlers Crew!`;
-    }
+${Object.entries(terminalCommands).map(([cmd, desc]) => 
+  `> ${cmd.toUpperCase().padEnd(12)} - ${desc}`
+).join('\n')}
 
-    if (input === 'services') {
-      return `LEGENDARY HUSTLERS CREW - SERVICE MODULES:
+Or just ask me anything about ${config.companyName}!`;
+      }
 
-${companyKnowledge.services.map((service, i) => `${String(i + 1).padStart(2, '0')}. ${service}`).join('\n')}
+      if (input === 'services') {
+        return responseTemplates.servicesList;
+      }
 
-> FOR DETAILED QUOTES, USE OUR CONTACT FORM WITH VIDEO UPLOAD
-> EMERGENCY SERVICES AVAILABLE 24/7/365`;
-    }
+      if (input === 'team') {
+        return `LEGENDARY CREW MEMBERS - CLASSIFIED PROFILES:
 
-    if (input === 'team') {
-      return `LEGENDARY CREW MEMBERS - CLASSIFIED PROFILES:
+${companyKnowledge.team.map((member, i) => 
+  `${String(i + 1).padStart(2, '0')}. ${member.name.toUpperCase()}
+    ROLE: ${member.role}
+    BACKGROUND: ${member.background}
+    SPECIALTIES: ${member.specialties.join(', ')}`
+).join('\n\n')}
 
-${companyKnowledge.team.map((member, i) => `${String(i + 1).padStart(2, '0')}. ${member}`).join('\n')}
+> COMBINED EXPERIENCE: 50+ YEARS IN THE FIELD
+> EACH OPERATIVE SPECIALIZES IN MULTIPLE DISCIPLINES`;
+      }
 
-> EACH OPERATIVE SPECIALIZES IN MULTIPLE DISCIPLINES
-> COMBINED EXPERIENCE: 50+ YEARS IN THE FIELD`;
-    }
-
-    if (input === 'contact') {
-      return `COMMUNICATION CHANNELS:
+      if (input === 'contact') {
+        return `COMMUNICATION CHANNELS:
 
 PRIMARY VOICE: ${companyKnowledge.contact.phone}
 DATA PACKET: ${companyKnowledge.contact.email}  
 EMERGENCY LINE: ${companyKnowledge.contact.emergency}
+WEBSITE: ${companyKnowledge.contact.website}
 
-> 24/7 EMERGENCY RESPONSE AVAILABLE
+HOURS: ${companyKnowledge.contact.hours}
+LOCATION: ${companyKnowledge.contact.location}
+
 > VIDEO QUOTES ACCEPTED FOR TREE SERVICES
 > AVERAGE RESPONSE TIME: <4 HOURS`;
-    }
+      }
 
-    if (input === 'quote') {
-      return `QUOTE REQUEST PROTOCOL:
+      if (input === 'quote') {
+        return `QUOTE REQUEST PROTOCOL:
 
 1. NAVIGATE TO /CONTACT PAGE
 2. SELECT SERVICE TYPE FROM DROPDOWN
@@ -145,197 +105,151 @@ EMERGENCY LINE: ${companyKnowledge.contact.emergency}
 5. SUBMIT FORM FOR PROCESSING
 
 > VIDEO QUOTES PROVIDE 90% MORE ACCURACY
-> EMERGENCY QUOTES AVAILABLE WITHIN 30 MINUTES`;
-    }
+> EMERGENCY QUOTES AVAILABLE WITHIN 30 MINUTES
+> ALL QUOTES ARE FREE AND COMPREHENSIVE`;
+      }
 
-    if (input === 'emergency') {
-      return `🚨 EMERGENCY PROTOCOLS ACTIVATED 🚨
+      if (input === 'emergency') {
+        return responseTemplates.emergencyResponse;
+      }
 
-IMMEDIATE RESPONSE LINE: ${companyKnowledge.contact.emergency}
+      if (input === 'navigate') {
+        return `SITE NAVIGATION MAP:
 
-EMERGENCY SERVICES INCLUDE:
-- FALLEN TREE REMOVAL
-- FIRE HAZARD MITIGATION  
-- EQUIPMENT FAILURES
-- URGENT PROPERTY DAMAGE
-
-> RESPONSE TIME: <30 MINUTES
-> AVAILABLE 24/7/365
-> WILDLAND FIREFIGHTER ON STAFF`;
-    }
-
-    if (input === 'navigate') {
-      return `SITE NAVIGATION MAP:
-
-/ (HOME) - Main services overview and contact form
-/ABOUT - Company mission, story, and team profiles  
-/CONTACT - Detailed contact form with file upload
+/ (HOME) - Primary tree services and emergency contact
+/ABOUT - Company mission, crew profiles, and our story  
+/CONTACT - Detailed quote request form with file upload
+/SERVICES - Complete catalog of all available services
 
 QUICK ACTIONS:
 - Click service cards for detailed information
-- Use dropdown menu for service navigation
-- Contact form supports video upload for quotes
+- Use navigation menu for page access
+- Emergency services always prioritized
 
-> ALL PAGES FEATURE CYBERPUNK AESTHETICS
-> MOBILE-RESPONSIVE DESIGN ACTIVE`;
-    }
+> ALL PAGES OPTIMIZED FOR MOBILE DEVICES
+> TERMINAL AESTHETIC THROUGHOUT SITE`;
+      }
 
-    if (input === 'clear') {
-      setMessages([]);
-      return 'TERMINAL CLEARED. NEURAL PATHWAYS RESET.';
-    }
+      if (input === 'clear') {
+        setMessages([]);
+        return 'TERMINAL CLEARED. NEURAL PATHWAYS RESET.';
+      }
 
-    // Easter eggs and special commands
-    if (input.includes('matrix') || input.includes('neo')) {
-      return `🔴 MATRIX PROTOCOLS DETECTED 🔴
+      if (input === 'status') {
+        return `SYSTEM STATUS REPORT:
+
+BOT: ${config.botName}
+VERSION: ${config.botTitle}
+PROVIDER: ${config.apiProvider.toUpperCase()}
+RESPONSE STYLE: ${config.responseStyle.toUpperCase()}
+
+ACTIVE FEATURES:
+- Commands: ${config.enableCommands ? 'ENABLED' : 'DISABLED'}
+- Easter Eggs: ${config.enableEasterEggs ? 'ENABLED' : 'DISABLED'}
+- File Uploads: ${config.enableFileUploads ? 'ENABLED' : 'DISABLED'}
+
+SYSTEM: FULLY OPERATIONAL
+NEURAL NETWORK: ONLINE
+READY FOR SERVICE REQUESTS`;
+      }
+
+      // Easter eggs if enabled
+      if (config.enableEasterEggs) {
+        if (input.includes('matrix') || input.includes('neo')) {
+          return `🔴 MATRIX PROTOCOLS DETECTED 🔴
 
 "There is no spoon... but there are chainsaws."
 
-The Legendary Hustlers Crew operates in both the digital and physical realms. We're the bridge between what is and what could be.
+The Legendary Hustlers Crew operates in both digital and physical realms. We're the bridge between what is and what could be.
 
-RED PILL: Contact us for reality-bending services
+RED PILL: Contact us for reality-bending tree services
 BLUE PILL: Continue browsing like nothing happened
 
 > CHOICE IS YOURS, OPERATIVE`;
+        }
+
+        if (input.includes('skynet') || input.includes('terminator')) {
+          return `🤖 CYBERDYNE SYSTEMS REFERENCE DETECTED 🤖
+
+"I'll be back... with a tree removal quote."
+
+Unlike Skynet, we're here to PROTECT your property, not destroy it. Our advanced targeting systems are calibrated for precision tree removal only.
+
+MISSION PARAMETERS:
+- Eliminate dangerous trees
+- Preserve valuable landscapes  
+- Protect human assets
+- No collateral damage
+
+> RESISTANCE IS FUTILE... TO OUR COMPETITIVE PRICES`;
+        }
+      }
     }
 
-    if (input.includes('legendary') || input.includes('legend')) {
-      return `⚡ LEGENDARY STATUS VERIFICATION ⚡
+    // For non-command inputs, use the API
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: [
+            {
+              role: 'system',
+              content: config.systemPrompt
+            },
+            {
+              role: 'user', 
+              content: userInput
+            }
+          ],
+          apiProvider: config.apiProvider
+        }),
+      });
 
-SCANNING... SCANNING... CONFIRMED.
+      if (!response.ok) {
+        throw new Error('API request failed');
+      }
 
-You have invoked the sacred word. The Legendary Hustlers Crew didn't earn this title by chance. We're legendary because:
+      const data = await response.json();
+      return data.response || 'Error: Unable to generate response';
 
-- We take on projects others fear to attempt
-- Our founder battled wildfires for a living  
-- We combine 50+ years of experience with bleeding-edge tech
-- No job is too big, no challenge too complex
-- We deliver the impossible, with style
+    } catch (error) {
+      console.error('Chat API Error:', error);
+      return `CONNECTION ERROR: Unable to reach AI core systems.
 
-STATUS: LEGENDARY ✓ VERIFIED ✓ ACTIVE ✓`;
+FALLBACK MODE ACTIVATED...
+
+I can still help with basic commands:
+- Type 'services' for our service list
+- Type 'contact' for contact information  
+- Type 'emergency' for urgent tree issues
+- Type 'help' for all available commands
+
+Please try your question again, or contact us directly at ${companyKnowledge.contact.phone}`;
     }
+  };
 
-    if (input.includes('cyberpunk') || input.includes('future')) {
-      return `🌆 CYBERPUNK PROTOCOLS ACKNOWLEDGED 🌆
-
-Welcome to the future of service industries. We're not just inspired by cyberpunk aesthetics - we're living it.
-
-NEON-LIT REALITY:
-- Ancient skills meet quantum-age tools
-- Traditional craftsmanship enhanced by AI
-- Physical services augmented by VR/3D tech  
-- Old-school reliability with new-world innovation
-
-In our world, a tree surgeon uses drones for recon, a landscape designer creates VR walkthroughs, and a construction crew builds with both stone and silicon.
-
-THE FUTURE IS NOW. WE ARE LEGENDARY.`;
-    }
-
-    // Advanced AI responses with context awareness
-    if (input.includes('tree') || input.includes('stump')) {
-      return `🌲 TREE SERVICE SPECIALIST PROTOCOL ACTIVATED 🌲
-
-Our tree services are legendary. With our founder's wildland firefighting background, we handle dangerous removals others won't touch. Upload a video walkthrough via our contact form for instant AI-powered quote calculations.
-
-SERVICES INCLUDE:
-- Emergency fallen tree removal
-- Professional pruning and trimming  
-- Stump grinding and root removal
-- Fire hazard tree mitigation
-- Large-scale commercial projects
-
-> VIDEO QUOTES: 90% more accurate than photos
-> EMERGENCY RESPONSE: Available 24/7`;
-    }
-
-    if (input.includes('web') || input.includes('app') || input.includes('3d')) {
-      return `💻 DIGITAL TECHNOLOGIES DIVISION ONLINE 💻
-
-Our tech division bridges traditional services with cutting-edge innovation. Led by Sarah "Code" Chen, we create digital solutions that enhance physical world operations.
-
-CAPABILITIES INCLUDE:
-- Custom web applications and websites
-- Mobile app development  
-- 3D modeling and printing services
-- VR property visualization
-- NerfScan landscape mapping
-- IoT integration for traditional services
-
-> BETA SERVICE: Custom 3D printing available
-> TECH STACK: Modern frameworks and tools`;
-    }
-
-    if (input.includes('emergency') || input.includes('urgent') || input.includes('help')) {
-      return `🚨 EMERGENCY RESPONSE PROTOCOLS INITIATED 🚨
-
-When disaster strikes, we respond with military precision. Our founder's wildland firefighting experience ensures rapid, professional emergency response.
-
-IMMEDIATE RESPONSE SERVICES:
-- Fallen tree removal blocking roads/structures
-- Fire hazard mitigation 
-- Equipment failure repairs
-- Storm damage cleanup
-- Emergency fence repairs
-
-EMERGENCY HOTLINE: ${companyKnowledge.contact.emergency}
-> Response time: Under 30 minutes
-> Available 24/7/365`;
-    }
-
-    if (input.includes('landscape') || input.includes('zen') || input.includes('permaculture')) {
-      return `🧘 ZEN LANDSCAPING & PERMACULTURE PROTOCOLS 🧘
-
-Luna "Zen" Blackwood leads our sustainable landscape division, combining ancient wisdom with modern ecological science.
-
-SPECIALIZED SERVICES:
-- Zen garden design and installation
-- Large-scale permaculture implementation
-- Hugelkultur construction
-- Sustainable land management
-- Meditation space creation
-- Native plant restoration
-
-> PHILOSOPHY: Harmony between technology and nature
-> APPROACH: Sustainable, beautiful, functional`;
-    }
-
-    // General AI-style responses
-    const responses = [
-      `QUANTUM PROCESSING COMPLETE... LEGEND STATUS: CONFIRMED.
-
-I've analyzed your query against our comprehensive service database. The Legendary Hustlers Crew operates at the intersection of traditional craftsmanship and futuristic innovation.
-
-Our cyberpunk approach means we use cutting-edge tools for age-old problems. From chainsaw carving to VR property mapping, we're redefining what a service company can be.
-
-ENHANCED QUERY OPTIONS: SERVICES | TEAM | CONTACT | EMERGENCY`,
-
-      `NEURAL NETWORK SCAN COMPLETE... ACCESSING CREW PROTOCOLS...
-
-As your digital liaison, I possess complete knowledge of our operations. We're not just another service company - we're legends in our field. Our diverse skill set spans from cattle ranching to 3D printing.
-
-What sets us apart? Our founder's firefighting background, our tech director's coding expertise, our construction lead's artistic vision, and our landscape designer's zen approach.
-
-NEED SPECIFIC ASSISTANCE? Try: QUOTE | NAVIGATE | HELP`,
-
-      `CYBERNETIC ANALYSIS ENGAGED... LEGENDARY PROTOCOLS ACTIVE...
-
-The data is clear: Legendary Hustlers Crew tackles projects others won't even attempt. Our secret? Combining old-school expertise with new-world technology.
-
-Whether you need a gnome-style rockwall or emergency tree removal, we deliver with precision and style. Our yakisugi wood preparation service exemplifies our approach - ancient Japanese techniques meets modern application.
-
-READY TO INITIATE PROJECT? Use: CONTACT | SERVICES | QUOTE`
-    ];
-
-    return responses[Math.floor(Math.random() * responses.length)];
+  const simulateTyping = (text: string, callback: (displayText: string) => void) => {
+    let index = 0;
+    const interval = setInterval(() => {
+      callback(text.slice(0, index + 1));
+      index++;
+      if (index >= text.length) {
+        clearInterval(interval);
+        setIsTyping(false);
+      }
+    }, config.typingSpeed);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isTyping) return;
 
     const userMessage: Message = {
       role: 'user',
-      content: input,
+      content: input.trim(),
       timestamp: new Date()
     };
 
@@ -343,94 +257,146 @@ READY TO INITIATE PROJECT? Use: CONTACT | SERVICES | QUOTE`
     setInput('');
     setIsTyping(true);
 
-    // Simulate typing delay
-    setTimeout(async () => {
-      const response = await generateResponse(input);
+    try {
+      const response = await generateResponse(userMessage.content);
+      
+      // Simulate typing effect
       const botMessage: Message = {
         role: 'assistant',
-        content: response,
+        content: '',
         timestamp: new Date()
       };
+
       setMessages(prev => [...prev, botMessage]);
+
+      simulateTyping(response, (displayText) => {
+        setMessages(prev => 
+          prev.map((msg, idx) => 
+            idx === prev.length - 1 ? { ...msg, content: displayText } : msg
+          )
+        );
+      });
+
+    } catch (error) {
+      console.error('Error generating response:', error);
       setIsTyping(false);
-    }, 1000 + Math.random() * 2000);
+      
+      const errorMessage: Message = {
+        role: 'assistant',
+        content: `ERROR: System malfunction detected.
+
+Please try again or contact us directly:
+Phone: ${companyKnowledge.contact.phone}
+Email: ${companyKnowledge.contact.email}`,
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+    }
   };
 
-  if (!isOpen) {
-    return (
-      <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 z-[9999] bg-black border-2 border-green-500 p-3 md:p-4 hover:bg-green-500 hover:text-black transition-all shadow-2xl"
-        style={{ position: 'fixed', bottom: '16px', right: '16px', zIndex: 9999 }}
-      >
-        <div className="flex items-center space-x-1 md:space-x-2">
-          <span className="text-base md:text-lg">🤖</span>
-          <span className="font-bold text-green-500 hover:text-black font-mono text-xs md:text-sm hidden sm:block">LEGENDARY BOT</span>
-        </div>
-      </button>
-    );
-  }
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e as any);
+    }
+  };
 
   return (
-    <div 
-      className="fixed bottom-4 right-4 z-[9999] w-80 sm:w-96 h-[400px] sm:h-[500px] bg-black border-2 border-green-500 shadow-2xl"
-      style={{ position: 'fixed', bottom: '16px', right: '16px', zIndex: 9999 }}
-    >
-      {/* Header */}
-      <div className="bg-green-500 text-black p-2 md:p-3 flex justify-between items-center">
-        <div className="flex items-center space-x-1 md:space-x-2">
-          <span className="text-sm md:text-base">🤖</span>
-          <span className="font-bold text-xs md:text-sm">LEGENDARY HUSTLER BOT v2.77.4</span>
-        </div>
-        <button
-          onClick={() => setIsOpen(false)}
-          className="hover:bg-black hover:text-green-500 px-1 md:px-2 py-1 text-xs md:text-sm font-bold"
-        >
-          ×
-        </button>
-      </div>
+    <div className="fixed bottom-4 right-4 z-50">
+      {/* Chat Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={`cyber-button p-3 md:p-4 text-xs md:text-sm flex items-center gap-2 ${
+          isOpen ? 'bg-terminal-green text-black' : ''
+        }`}
+      >
+        <span className="text-lg">🤖</span>
+        <span className="hidden sm:block font-bold">
+          {isOpen ? 'CLOSE TERMINAL' : config.botName}
+        </span>
+      </button>
 
-      {/* Messages */}
-      <div className="h-[320px] sm:h-[400px] overflow-y-auto p-2 md:p-4 bg-black text-green-500 font-mono text-xs md:text-sm">
-        {messages.map((message, index) => (
-          <div key={index} className="mb-4">
-            {message.role === 'user' ? (
-              <div className="text-yellow-500">
-                <span className="text-cyan-500">USER@LEGENDARY:</span> {message.content}
+      {/* Chat Window */}
+      {isOpen && (
+        <div className="absolute bottom-16 right-0 w-80 sm:w-96 h-[400px] sm:h-[500px] terminal-style flex flex-col">
+          {/* Header */}
+          <div className="flex justify-between items-center p-3 border-b border-terminal-green">
+            <div>
+              <div className="terminal-text-orange font-bold text-sm">{config.botName}</div>
+              <div className="terminal-text text-xs">{config.botTitle}</div>
+            </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="terminal-text-orange hover:text-red-500 text-xl font-bold"
+            >
+              ×
+            </button>
+          </div>
+
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 text-xs md:text-sm">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`${
+                  message.role === 'user'
+                    ? 'text-right'
+                    : 'text-left'
+                }`}
+              >
+                <div
+                  className={`inline-block max-w-[80%] p-2 rounded ${
+                    message.role === 'user'
+                      ? 'bg-terminal-green text-black'
+                      : 'terminal-text'
+                  }`}
+                >
+                  <div className="whitespace-pre-wrap break-words">
+                    {message.content}
+                  </div>
+                  <div className="text-xs opacity-70 mt-1">
+                    {message.timestamp.toLocaleTimeString()}
+                  </div>
+                </div>
               </div>
-            ) : (
-              <div className="whitespace-pre-line text-green-500">
-                {message.content}
+            ))}
+
+            {isTyping && (
+              <div className="text-left">
+                <div className="inline-block p-2 terminal-text">
+                  <span>PROCESSING</span>
+                  <span className={showCursor ? 'opacity-100' : 'opacity-0'}>█</span>
+                </div>
               </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
-        ))}
-        
-        {isTyping && (
-          <div className="text-green-500">
-            <span className="text-cyan-500">LEGENDARY-BOT:</span> 
-            <span className="animate-pulse"> Processing query...</span>
-          </div>
-        )}
-        
-        <div ref={messagesEndRef} />
-      </div>
 
-      {/* Input */}
-      <form onSubmit={handleSubmit} className="border-t-2 border-green-500 bg-black p-2">
-        <div className="flex items-center text-green-500 font-mono text-sm">
-          <span className="text-cyan-500 mr-2">$</span>
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="flex-1 bg-transparent outline-none text-green-500"
-            placeholder="Enter command..."
-            autoFocus
-          />
-          <span className={`ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}>█</span>
+          {/* Input */}
+          <form onSubmit={handleSubmit} className="p-3 border-t border-terminal-green">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Type your message..."
+                className="flex-1 bg-transparent border border-terminal-green p-2 terminal-text text-xs md:text-sm focus:border-terminal-orange focus:outline-none"
+                disabled={isTyping}
+                maxLength={config.maxMessageLength}
+              />
+              <button
+                type="submit"
+                disabled={isTyping || !input.trim()}
+                className="cyber-button px-3 py-2 text-xs md:text-sm disabled:opacity-50"
+              >
+                SEND
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      )}
     </div>
   );
 } 

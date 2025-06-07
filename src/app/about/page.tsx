@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
+import LegendaryBot from '../components/LegendaryBot';
 
 export default function About() {
   const [activeTab, setActiveTab] = useState('mission');
@@ -10,110 +11,118 @@ export default function About() {
 
   const teamMembers = [
     {
-      name: "JACK &rsquo;CHAINSAW&rsquo; REYNOLDS",
-      role: "FOUNDER & CEO",
-      bio: "Former wildland firefighter turned digital entrepreneur. Expert in tree services, fire mitigation, and cutting-edge technology integration.",
-      image: "👨‍💼",
-      specialties: ["Tree Services", "Fire Mitigation", "Leadership"],
-      color: "neon-green"
+      name: "JACK 'CHAINSAW' REYNOLDS",
+      role: "LEAD ARBORIST & FOUNDER",
+      image: "🌲",
+      color: "terminal-text-orange",
+      bio: "Former wildland firefighter turned master arborist. 15+ years of experience in dangerous tree removal and fire prevention.",
+      specialties: ["Emergency Tree Removal", "Fire Hazard Assessment", "Climbing Techniques", "Safety Protocols"]
     },
     {
-      name: "SARAH &rsquo;CODE&rsquo; CHEN",
-      role: "TECH DIRECTOR",
-      bio: "Full-stack developer and 3D modeling specialist. Bridges the gap between traditional services and digital innovation.",
-      image: "👩‍💻",
-      specialties: ["Web Development", "3D Modeling", "VR Mapping"],
-      color: "neon-cyan"
+      name: "SARAH 'ROOTS' MARTINEZ",
+      role: "LANDSCAPE ARCHITECT",
+      image: "🌿", 
+      color: "terminal-text",
+      bio: "Permaculture expert with a passion for zen landscape design. Creates harmony between natural beauty and practical function.",
+      specialties: ["Zen Landscaping", "Permaculture Design", "Native Plants", "Sustainable Systems"]
     },
     {
-      name: "MIKE &rsquo;STONE&rsquo; RODRIGUEZ",
-      role: "CONSTRUCTION LEAD",
-      bio: "Master craftsman with 20 years experience in construction, stonework, and artistic installations.",
-      image: "👷‍♂️",
-      specialties: ["Rockwalls", "Tile Work", "Custom Construction"],
-      color: "neon-yellow"
+      name: "MIKE 'STUMP' JOHNSON",
+      role: "HEAVY EQUIPMENT OPERATOR",
+      image: "⚙️",
+      color: "terminal-text-orange",
+      bio: "Master of the grinder. No stump too big, no job too complex. Precision equipment operation with artistic attention to detail.",
+      specialties: ["Stump Grinding", "Land Clearing", "Equipment Repair", "Site Preparation"]
     },
     {
-      name: "LUNA &rsquo;ZEN&rsquo; BLACKWOOD",
-      role: "LANDSCAPE DESIGNER",
-      bio: "Permaculture expert and zen garden specialist. Creates harmonious spaces that blend technology with nature.",
-      image: "🧘‍♀️",
-      specialties: ["Permaculture", "Zen Landscaping", "Land Planning"],
-      color: "neon-pink"
+      name: "ALEX 'SCANNER' CHEN",
+      role: "TECHNOLOGY SPECIALIST",
+      image: "📡",
+      color: "terminal-text",
+      bio: "Brings cutting-edge 3D mapping and digital solutions to traditional tree services. Makes the complex simple.",
+      specialties: ["3D Terrain Mapping", "Project Visualization", "Digital Planning", "Technical Innovation"]
     }
   ];
 
   return (
     <div className="min-h-screen bg-black relative scanlines">
       <div className="cyberpunk-grid"></div>
-      
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-black/90 backdrop-blur-sm z-50 border-b border-green-500/30">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-2 md:space-x-4">
-            <Image 
-              src="/legendary-hustlers-logo.png" 
-              alt="Legendary Hustlers Crew" 
-              width={150}
-              height={48}
-              className="h-8 md:h-12 w-auto"
-            />
-            <div className="orbitron text-sm md:text-xl font-bold neon-text hidden sm:block">
-              LEGENDARY HUSTLERS CREW
-            </div>
-          </Link>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-6">
-            <Link href="/" className="cyber-button text-sm">HOME</Link>
-            <Link href="/#services" className="cyber-button text-sm">SERVICES</Link>
-            <button className="cyber-button text-sm border-pink-500 text-pink-500">ABOUT</button>
-            <Link href="/contact" className="cyber-button text-sm">CONTACT</Link>
-          </div>
 
-          {/* Mobile Navigation */}
-          <div className="md:hidden">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 bg-black/90 backdrop-blur-sm cyber-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center space-x-4">
+              <Image 
+                src="/legendary-hustlers-logo.png" 
+                alt="Legendary Hustlers Logo" 
+                width={40} 
+                height={40}
+                className="h-8 w-auto md:h-12"
+              />
+              <span className="terminal-text font-bold text-lg hidden sm:block">LEGENDARY HUSTLERS CREW</span>
+            </div>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex space-x-8">
+              <Link href="/" className="terminal-text hover:terminal-text-orange transition-colors">HOME</Link>
+              <Link href="/about" className="terminal-text-orange transition-colors">ABOUT</Link>
+              <Link href="/contact" className="terminal-text hover:terminal-text-orange transition-colors">CONTACT</Link>
+              <Link href="/services" className="terminal-text hover:terminal-text-orange transition-colors">ALL SERVICES</Link>
+            </div>
+
+            {/* Mobile Menu Button */}
             <button 
-              className="cyber-button text-sm px-3 py-2"
+              className="md:hidden terminal-text text-xl font-bold"
               onClick={() => setShowDropdown(!showDropdown)}
             >
               ☰ MENU
             </button>
-            {showDropdown && (
-              <div className="absolute top-full right-4 left-4 mt-2 terminal-style p-4 z-50">
-                <div className="space-y-3">
-                  <Link href="/" className="block w-full text-left cyber-button text-sm" onClick={() => setShowDropdown(false)}>HOME</Link>
-                  <Link href="/#services" className="block w-full text-left cyber-button text-sm" onClick={() => setShowDropdown(false)}>SERVICES</Link>
-                  <button className="block w-full text-left cyber-button text-sm border-pink-500 text-pink-500">ABOUT</button>
-                  <Link href="/contact" className="block w-full text-left cyber-button text-sm" onClick={() => setShowDropdown(false)}>CONTACT</Link>
-                </div>
-              </div>
-            )}
           </div>
+
+          {/* Mobile Dropdown */}
+          {showDropdown && (
+            <div className="md:hidden bg-black/95 border-t border-terminal-green">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                <Link href="/" className="terminal-text hover:terminal-text-orange block px-3 py-2 text-base font-medium w-full text-center">HOME</Link>
+                <Link href="/about" className="terminal-text-orange block px-3 py-2 text-base font-medium w-full text-center">ABOUT</Link>
+                <Link href="/contact" className="terminal-text hover:terminal-text-orange block px-3 py-2 text-base font-medium w-full text-center">CONTACT</Link>
+                <Link href="/services" className="terminal-text hover:terminal-text-orange block px-3 py-2 text-base font-medium w-full text-center">ALL SERVICES</Link>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-24 md:pt-32 pb-12 md:pb-20 px-4">
-        <div className="container mx-auto text-center">
-          <h1 className="orbitron text-3xl md:text-5xl lg:text-7xl font-black neon-text glitch mb-6 md:mb-8">
-            ABOUT THE CREW
-          </h1>
-          <p className="text-lg md:text-xl lg:text-2xl neon-yellow max-w-4xl mx-auto px-4">
-            We&rsquo;re not just service providers - we&rsquo;re digital pioneers bridging the gap between traditional craftsmanship and futuristic innovation.
-          </p>
+      <section className="pt-24 md:pt-32 lg:pt-40 pb-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="space-y-6 md:space-y-8">
+            <h1 className="pixel-text text-lg md:text-xl lg:text-2xl xl:text-3xl">
+              ABOUT LEGENDARY HUSTLERS CREW
+            </h1>
+            
+            <h2 className="terminal-text-orange text-xl md:text-2xl lg:text-4xl xl:text-5xl font-bold leading-relaxed">
+              TREE CARE EXPERTS WITH DIVERSE SKILLS
+            </h2>
+            
+            <p className="terminal-text text-base md:text-lg lg:text-xl max-w-4xl mx-auto leading-relaxed">
+              We&rsquo;re a specialized tree service crew with roots in traditional craftsmanship and branches reaching into modern solutions. 
+              Our core expertise is in professional tree care, but our diverse skill set allows us to tackle any property challenge.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Tab Navigation */}
-      <section className="px-4 mb-12 md:mb-20">
-        <div className="container mx-auto max-w-6xl">
-          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-8 md:mb-12 px-4">
+      <section className="px-4 sm:px-6 lg:px-8 mb-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-8 md:mb-12">
             {['mission', 'story', 'team'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`cyber-button w-full sm:w-auto px-6 py-3 ${activeTab === tab ? 'bg-green-500 text-black' : ''}`}
+                className={`cyber-button w-full sm:w-auto px-6 py-3 ${activeTab === tab ? 'bg-terminal-green text-black' : ''}`}
               >
                 {tab.toUpperCase()}
               </button>
@@ -123,39 +132,39 @@ export default function About() {
           {/* Mission Tab */}
           {activeTab === 'mission' && (
             <div className="terminal-style p-8 fade-in">
-              <h2 className="orbitron text-3xl font-bold neon-cyan mb-8 text-center">
+              <h2 className="pixel-text text-xl md:text-2xl lg:text-3xl mb-8 text-center">
                 OUR MISSION
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-6">
                   <div className="service-card">
-                    <h3 className="orbitron text-xl font-bold neon-green mb-4">INNOVATION</h3>
-                    <p className="text-gray-300">
-                      We combine traditional skills with cutting-edge technology to deliver services that exceed expectations. 
-                      From VR property mapping to AI-assisted project planning, we&rsquo;re always pushing boundaries.
+                    <h3 className="terminal-text-orange text-lg font-bold mb-4">TREE HEALTH & SAFETY</h3>
+                    <p className="terminal-text text-sm leading-relaxed">
+                      We prioritize the health and safety of your trees and property. Our expert assessments and precise techniques 
+                      ensure every job is completed safely while preserving the natural beauty of your landscape.
                     </p>
                   </div>
                   <div className="service-card">
-                    <h3 className="orbitron text-xl font-bold neon-pink mb-4">EXCELLENCE</h3>
-                    <p className="text-gray-300">
-                      Every project is executed with precision and attention to detail. Whether it&rsquo;s a simple chainsaw sharpening 
-                      or a complex permaculture installation, we deliver legendary results.
+                    <h3 className="terminal-text-orange text-lg font-bold mb-4">FIRE PREVENTION</h3>
+                    <p className="terminal-text text-sm leading-relaxed">
+                      With wildfire risks increasing, we provide crucial defensible space creation and fire hazard mitigation. 
+                      Our expertise protects your property and helps prevent catastrophic fire spread.
                     </p>
                   </div>
                 </div>
                 <div className="space-y-6">
                   <div className="service-card">
-                    <h3 className="orbitron text-xl font-bold neon-yellow mb-4">SUSTAINABILITY</h3>
-                    <p className="text-gray-300">
-                      Our services are designed with environmental consciousness. From fire mitigation to permaculture design, 
-                      we create solutions that protect and enhance the natural world.
+                    <h3 className="terminal-text-orange text-lg font-bold mb-4">SUSTAINABLE PRACTICES</h3>
+                    <p className="terminal-text text-sm leading-relaxed">
+                      Every service is designed with environmental consciousness. We recycle wood waste, use eco-friendly methods, 
+                      and create solutions that enhance rather than harm the natural ecosystem.
                     </p>
                   </div>
                   <div className="service-card">
-                    <h3 className="orbitron text-xl font-bold neon-cyan mb-4">ACCESSIBILITY</h3>
-                    <p className="text-gray-300">
-                      We believe quality services should be accessible to everyone. Our online quote system, video consultations, 
-                      and flexible scheduling make it easy to get the help you need.
+                    <h3 className="terminal-text-orange text-lg font-bold mb-4">EMERGENCY RESPONSE</h3>
+                    <p className="terminal-text text-sm leading-relaxed">
+                      When storms strike or trees fall, we&rsquo;re ready 24/7. Our rapid response team handles emergencies with 
+                      the urgency and expertise your situation demands.
                     </p>
                   </div>
                 </div>
@@ -166,34 +175,43 @@ export default function About() {
           {/* Story Tab */}
           {activeTab === 'story' && (
             <div className="terminal-style p-8 fade-in">
-              <h2 className="orbitron text-3xl font-bold neon-yellow mb-8 text-center">
+              <h2 className="pixel-text text-xl md:text-2xl lg:text-3xl mb-8 text-center">
                 OUR STORY
               </h2>
               <div className="max-w-4xl mx-auto space-y-8">
                 <div className="text-center">
                   <div className="text-6xl mb-4">🔥</div>
-                  <h3 className="orbitron text-2xl font-bold neon-green mb-4">FORGED IN FIRE</h3>
-                  <p className="text-gray-300 text-lg">
+                  <h3 className="terminal-text-orange text-xl font-bold mb-4">FORGED IN FIRE</h3>
+                  <p className="terminal-text leading-relaxed">
                     Our founder started as a wildland firefighter, battling blazes across the American West. 
-                    This experience taught him the value of preparation, quick thinking, and reliable execution under pressure.
+                    This experience taught him the critical importance of fire prevention, quick decision-making, and reliable execution under pressure.
                   </p>
                 </div>
                 
                 <div className="text-center">
-                  <div className="text-6xl mb-4">💻</div>
-                  <h3 className="orbitron text-2xl font-bold neon-cyan mb-4">DIGITAL EVOLUTION</h3>
-                  <p className="text-gray-300 text-lg">
-                    Recognizing the need for innovation in traditional services, we began integrating technology into our operations. 
-                    3D modeling, VR visualization, and online project management became part of our DNA.
+                  <div className="text-6xl mb-4">🌲</div>
+                  <h3 className="terminal-text-orange text-xl font-bold mb-4">ROOTED IN EXPERTISE</h3>
+                  <p className="terminal-text leading-relaxed">
+                    Transitioning from fighting fires to preventing them, we developed expertise in tree health, proper removal techniques, 
+                    and creating defensible spaces. Traditional arboriculture became our foundation.
                   </p>
                 </div>
                 
                 <div className="text-center">
-                  <div className="text-6xl mb-4">🚀</div>
-                  <h3 className="orbitron text-2xl font-bold neon-pink mb-4">LEGENDARY STATUS</h3>
-                  <p className="text-gray-300 text-lg">
-                    Today, we&rsquo;re the go-to crew for projects that others won&rsquo;t touch. From emergency tree removal to cutting-edge 
-                                          landscape mapping, we&rsquo;ve built a reputation for delivering the impossible with style.
+                  <div className="text-6xl mb-4">📡</div>
+                  <h3 className="terminal-text-orange text-xl font-bold mb-4">MODERN INNOVATION</h3>
+                  <p className="terminal-text leading-relaxed">
+                    Recognizing the need for precision in complex projects, we integrated 3D mapping and visualization technology. 
+                    This allows us to plan projects with unprecedented accuracy and show clients exactly what to expect.
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="text-6xl mb-4">🏆</div>
+                  <h3 className="terminal-text-orange text-xl font-bold mb-4">LEGENDARY RESULTS</h3>
+                  <p className="terminal-text leading-relaxed">
+                    Today, we&rsquo;re the crew that others call when they face impossible tree situations. Emergency removals, 
+                    complex rigging, hazardous climbs - we&rsquo;ve built our reputation on delivering safe, professional results every time.
                   </p>
                 </div>
               </div>
@@ -203,7 +221,7 @@ export default function About() {
           {/* Team Tab */}
           {activeTab === 'team' && (
             <div className="fade-in">
-              <h2 className="orbitron text-3xl font-bold text-center mb-12 neon-pink">
+              <h2 className="pixel-text text-xl md:text-2xl lg:text-3xl text-center mb-12">
                 MEET THE CREW
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -211,25 +229,25 @@ export default function About() {
                   <div key={index} className="service-card">
                     <div className="text-center mb-6">
                       <div className="text-6xl mb-4">{member.image}</div>
-                      <h3 className={`orbitron text-xl font-bold mb-2 ${member.color}`}>
+                      <h3 className={`terminal-text-orange text-lg font-bold mb-2`}>
                         {member.name}
                       </h3>
-                      <p className={`text-sm uppercase tracking-wider ${member.color}`}>
+                      <p className={`text-sm uppercase tracking-wider terminal-text`}>
                         {member.role}
                       </p>
                     </div>
                     
-                    <p className="text-gray-300 mb-6 text-center">
+                    <p className="terminal-text mb-6 text-center text-sm leading-relaxed">
                       {member.bio}
                     </p>
                     
                     <div className="space-y-2">
-                      <h4 className="orbitron font-bold neon-text text-sm">SPECIALTIES:</h4>
+                      <h4 className="terminal-text-orange font-bold text-sm">SPECIALTIES:</h4>
                       <div className="flex flex-wrap gap-2">
                         {member.specialties.map((specialty, idx) => (
                           <span 
                             key={idx} 
-                            className={`px-3 py-1 text-xs border ${member.color} border-current rounded-none`}
+                            className="px-3 py-1 text-xs border terminal-text border-terminal-green"
                           >
                             {specialty}
                           </span>
@@ -245,48 +263,54 @@ export default function About() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 px-4 bg-black/50">
-        <div className="container mx-auto">
-          <h2 className="orbitron text-3xl font-bold text-center mb-16 neon-text">
-            BY THE NUMBERS
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-black/50">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="pixel-text text-xl md:text-2xl lg:text-3xl text-center mb-12">
+            OUR IMPACT
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="orbitron text-4xl font-black neon-green mb-2">500+</div>
-              <div className="text-sm text-gray-400">PROJECTS COMPLETED</div>
+              <div className="text-4xl md:text-6xl terminal-text-orange font-bold mb-2">500+</div>
+              <p className="terminal-text text-sm">Trees Safely Removed</p>
             </div>
             <div className="text-center">
-              <div className="orbitron text-4xl font-black neon-cyan mb-2">24/7</div>
-              <div className="text-sm text-gray-400">EMERGENCY RESPONSE</div>
+              <div className="text-4xl md:text-6xl terminal-text-orange font-bold mb-2">24/7</div>
+              <p className="terminal-text text-sm">Emergency Response</p>
             </div>
             <div className="text-center">
-              <div className="orbitron text-4xl font-black neon-yellow mb-2">19</div>
-              <div className="text-sm text-gray-400">DIFFERENT SERVICES</div>
+              <div className="text-4xl md:text-6xl terminal-text-orange font-bold mb-2">15+</div>
+              <p className="terminal-text text-sm">Years Experience</p>
             </div>
             <div className="text-center">
-              <div className="orbitron text-4xl font-black neon-pink mb-2">100%</div>
-              <div className="text-sm text-gray-400">SATISFACTION RATE</div>
+              <div className="text-4xl md:text-6xl terminal-text-orange font-bold mb-2">100%</div>
+              <p className="terminal-text text-sm">Safety Record</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-black/90 border-t border-green-500/30 py-8 px-4">
-        <div className="container mx-auto text-center">
-          <div className="orbitron text-2xl font-bold neon-text mb-4">
-            LEGENDARY HUSTLERS CREW
-          </div>
-          <p className="text-gray-400 mb-4">
-            Cyberpunk services for the modern world. No job too big, no challenge too complex.
+      {/* Contact Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <h2 className="pixel-text text-lg md:text-xl lg:text-2xl">
+            READY TO WORK WITH THE CREW?
+          </h2>
+          <p className="terminal-text text-base md:text-lg leading-relaxed">
+            Whether you need emergency tree removal, routine maintenance, or a complete landscape transformation, 
+            we bring the expertise and passion to get the job done right.
           </p>
-          <div className="flex justify-center space-x-8 text-sm">
-            <span className="neon-green">EMAIL: hustlers@legendary.crew</span>
-            <span className="neon-pink">PHONE: (555) HUSTLE-NOW</span>
-            <span className="neon-yellow">24/7 EMERGENCY SERVICES</span>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/contact" className="cyber-button w-full sm:w-auto text-center">
+              GET YOUR QUOTE
+            </Link>
+            <Link href="/" className="cyber-button w-full sm:w-auto text-center">
+              VIEW SERVICES
+            </Link>
           </div>
         </div>
-      </footer>
+      </section>
+
+      <LegendaryBot />
     </div>
   );
 } 

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import LegendaryBot from "./components/LegendaryBot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Legendary Hustlers Crew - Cyberpunk Services",
-  description: "Professional services with a cyberpunk edge. Tree removal, web development, and everything in between.",
+  title: "Legendary Hustlers Crew - Tree Work & Handy Man Services",
+  description: "Professional tree services, landscaping, and property management. Emergency tree removal, stump grinding, fire hazard mitigation, and more.",
 };
 
 export default function RootLayout({
@@ -29,7 +28,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <LegendaryBot />
       </body>
     </html>
   );

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Press+Start+2P&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,6 +8,8 @@
   --neon-pink: #ff00ff;
   --neon-yellow: #ffff00;
   --neon-cyan: #00ffff;
+  --terminal-green: #00aa00;
+  --terminal-orange: #ff8800;
   --dark-bg: #0a0a0a;
   --grid-color: #1a1a1a;
 }
@@ -19,7 +21,7 @@
 body {
   font-family: 'Share Tech Mono', monospace;
   background-color: var(--dark-bg);
-  color: var(--neon-green);
+  color: var(--terminal-green);
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -32,47 +34,63 @@ body {
   width: 100%;
   height: 100%;
   background-image: 
-    linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
-  background-size: 50px 50px;
+    linear-gradient(rgba(0, 170, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 170, 0, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
   pointer-events: none;
   z-index: -1;
 }
 
+/* DOS Terminal Style Text - Crisp and readable */
+.terminal-text {
+  color: var(--terminal-green);
+  font-family: 'Share Tech Mono', monospace;
+  text-shadow: 1px 1px 0px rgba(0, 170, 0, 0.5);
+  letter-spacing: 1px;
+}
+
+.terminal-text-orange {
+  color: var(--terminal-orange);
+  font-family: 'Share Tech Mono', monospace;
+  text-shadow: 1px 1px 0px rgba(255, 136, 0, 0.5);
+  letter-spacing: 1px;
+}
+
+.pixel-text {
+  font-family: 'Press Start 2P', monospace;
+  color: var(--terminal-green);
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+  image-rendering: pixelated;
+  letter-spacing: 2px;
+}
+
+/* Reduced glow effects - more subtle */
 .neon-text {
   color: var(--neon-green);
   text-shadow: 
-    0 0 5px var(--neon-green),
-    0 0 10px var(--neon-green),
-    0 0 15px var(--neon-green),
-    0 0 20px var(--neon-green);
+    0 0 2px var(--neon-green),
+    0 0 4px var(--neon-green);
 }
 
 .neon-pink {
   color: var(--neon-pink);
   text-shadow: 
-    0 0 5px var(--neon-pink),
-    0 0 10px var(--neon-pink),
-    0 0 15px var(--neon-pink),
-    0 0 20px var(--neon-pink);
+    0 0 2px var(--neon-pink),
+    0 0 4px var(--neon-pink);
 }
 
 .neon-yellow {
   color: var(--neon-yellow);
   text-shadow: 
-    0 0 5px var(--neon-yellow),
-    0 0 10px var(--neon-yellow),
-    0 0 15px var(--neon-yellow),
-    0 0 20px var(--neon-yellow);
+    0 0 2px var(--neon-yellow),
+    0 0 4px var(--neon-yellow);
 }
 
 .neon-cyan {
   color: var(--neon-cyan);
   text-shadow: 
-    0 0 5px var(--neon-cyan),
-    0 0 10px var(--neon-cyan),
-    0 0 15px var(--neon-cyan),
-    0 0 20px var(--neon-cyan);
+    0 0 2px var(--neon-cyan),
+    0 0 4px var(--neon-cyan);
 }
 
 .glitch {
@@ -88,16 +106,16 @@ body {
 }
 
 .cyber-border {
-  border: 2px solid var(--neon-green);
+  border: 2px solid var(--terminal-green);
   box-shadow: 
-    0 0 10px var(--neon-green),
-    inset 0 0 10px rgba(0, 255, 65, 0.1);
+    0 0 4px var(--terminal-green),
+    inset 0 0 4px rgba(0, 170, 0, 0.1);
 }
 
 .cyber-button {
   background: transparent;
-  border: 2px solid var(--neon-green);
-  color: var(--neon-green);
+  border: 2px solid var(--terminal-green);
+  color: var(--terminal-green);
   padding: 12px 24px;
   font-family: 'Share Tech Mono', monospace;
   font-size: 14px;
@@ -108,17 +126,17 @@ body {
 }
 
 .cyber-button:hover {
-  background: var(--neon-green);
+  background: var(--terminal-green);
   color: var(--dark-bg);
   box-shadow: 
-    0 0 20px var(--neon-green),
-    inset 0 0 20px rgba(0, 255, 65, 0.2);
+    0 0 8px var(--terminal-green),
+    inset 0 0 8px rgba(0, 170, 0, 0.2);
   text-shadow: none;
 }
 
 .service-card {
   background: rgba(0, 0, 0, 0.8);
-  border: 1px solid var(--neon-green);
+  border: 1px solid var(--terminal-green);
   border-radius: 0;
   padding: 20px;
   margin: 20px 0;
@@ -129,10 +147,10 @@ body {
 }
 
 .service-card:hover {
-  border-color: var(--neon-pink);
+  border-color: var(--terminal-orange);
   box-shadow: 
-    0 0 30px rgba(255, 0, 255, 0.5),
-    inset 0 0 30px rgba(255, 0, 255, 0.1);
+    0 0 12px rgba(255, 136, 0, 0.4),
+    inset 0 0 12px rgba(255, 136, 0, 0.1);
   transform: translateY(-5px) scale(1.02);
   background: rgba(0, 0, 0, 0.9);
 }
@@ -144,14 +162,14 @@ body {
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(45deg, var(--neon-green), var(--neon-pink), var(--neon-yellow), var(--neon-cyan));
+  background: linear-gradient(45deg, var(--terminal-green), var(--terminal-orange), var(--neon-cyan));
   z-index: -1;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .service-card:hover::before {
-  opacity: 0.7;
+  opacity: 0.3;
 }
 
 .scanlines {
@@ -169,8 +187,8 @@ body {
     0deg,
     transparent,
     transparent 2px,
-    rgba(0, 255, 65, 0.03) 2px,
-    rgba(0, 255, 65, 0.03) 4px
+    rgba(0, 170, 0, 0.03) 2px,
+    rgba(0, 170, 0, 0.03) 4px
   );
   pointer-events: none;
 }
@@ -186,7 +204,7 @@ body {
 
 .typing {
   overflow: hidden;
-  border-right: 2px solid var(--neon-green);
+  border-right: 2px solid var(--terminal-green);
   white-space: nowrap;
   animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
 }
@@ -198,17 +216,17 @@ body {
 
 @keyframes blink-caret {
   from, to { border-color: transparent; }
-  50% { border-color: var(--neon-green); }
+  50% { border-color: var(--terminal-green); }
 }
 
 .terminal-style {
   background: rgba(0, 0, 0, 0.9);
-  border: 2px solid var(--neon-green);
+  border: 2px solid var(--terminal-green);
   font-family: 'Share Tech Mono', monospace;
-  color: var(--neon-green);
+  color: var(--terminal-green);
   box-shadow: 
-    0 0 20px rgba(0, 255, 65, 0.3),
-    inset 0 0 20px rgba(0, 255, 65, 0.1);
+    0 0 8px rgba(0, 170, 0, 0.3),
+    inset 0 0 8px rgba(0, 170, 0, 0.1);
 }
 
 .orbitron {
@@ -218,7 +236,7 @@ body {
 .spinning-logo {
   animation: spinLogo 8s linear infinite;
   transform-style: preserve-3d;
-  filter: drop-shadow(0 0 20px rgba(0, 255, 65, 0.5));
+  filter: drop-shadow(0 0 8px rgba(0, 170, 0, 0.4));
 }
 
 @keyframes spinLogo {
@@ -241,10 +259,8 @@ body {
 
 .spinning-logo:hover {
   animation-duration: 2s;
-  filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.8));
+  filter: drop-shadow(0 0 12px rgba(255, 136, 0, 0.6));
 }
-
-
 
 .pulse-glow {
   animation: pulseGlow 3s ease-in-out infinite;
@@ -252,15 +268,15 @@ body {
 
 @keyframes pulseGlow {
   0%, 100% { 
-    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    box-shadow: 0 0 8px rgba(0, 170, 0, 0.3);
   }
   50% { 
-    box-shadow: 0 0 40px rgba(0, 255, 65, 0.8);
+    box-shadow: 0 0 16px rgba(0, 170, 0, 0.6);
   }
 }
 
 .text-gradient {
-  background: linear-gradient(45deg, var(--neon-green), var(--neon-cyan), var(--neon-pink), var(--neon-yellow));
+  background: linear-gradient(45deg, var(--terminal-green), var(--neon-cyan), var(--terminal-orange));
   background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
